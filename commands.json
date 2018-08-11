@@ -1,6 +1,37 @@
 {
+  /* Command types: echo - reacts to a command or keywords
+   *    - cmd(optional): the commands it should react to
+   *    - response: the response it should give, needs to contain %s as a placeholder for the <@userId> of the user being responded to
+   *    - predicate: a predicate in disjunctive normal form when the bot should auto respond to any user message (only once per user per restart)
+   *        case insensitive!
+   *
+   */
+
+  /* cooldown between using commands specified as "cmd" in ms */
+  "commandCooldown": 3000,
+
   "commands": [
-    {"type": "echo", "cmd": "!uid", "response": "You seem to have posted an issue about our UID system.\nIt is very likely this happens due to you using McAfee.\nPlease make sure your antivirus didn't delete the faf-uid.exe file.\nIf this has happened, change your antivirus software or add an exception and restore the file. The file can also be restored by installing the client again."},
-    {"type": "echo", "cmd": "!demo", "response": "I'm alive."}
+
+    {
+      "type": "echo",
+      "cmd": ["!demo"],
+      "response": "%s I'm alive."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!uid", "!mcafee"],
+      "predicate": {"clauses": [
+        {"literals": ["uid", "calculate"]}, /* Read like: message needs to contain all literals in a line -> react */
+        {"literals": ["uid", "smurf"]},
+        {"literals": ["uid", "failed"]},
+        {"literals": ["unique id", "calculate"]},
+        {"literals": ["unique id", "smurf"]},
+        {"literals": ["unique id", "failed"]},
+        {"literals": ["cannot run program \"lib/faf-uid.exe\""]}
+      ]},
+      "response": "%s You seem to have posted an issue about our UID system.\nIt is very likely this happens due to you using McAfee.\nPlease make sure your antivirus didn't delete the faf-uid.exe file.\nIf this has happened, change your antivirus software or add an exception and restore the file. The file can also be restored by installing the client again."
+    }
+
   ]
 }

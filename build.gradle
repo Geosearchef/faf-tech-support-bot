@@ -11,7 +11,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'application'
-mainClassName = 'de.geosearchef.UIDBot'
+mainClassName = 'de.geosearchef.TechSupportBot'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group 'de.geosearchef'

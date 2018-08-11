@@ -1,9 +1,9 @@
 package de.geosearchef;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
-public class Config {
+class Config {
+	private final int commandCooldown;
 	private final Command[] commands;
 }
