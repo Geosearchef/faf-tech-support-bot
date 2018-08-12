@@ -32,6 +32,65 @@
       ]},
       "response": "%s You seem to have posted an issue about our UID system.\nIt is very likely this happens due to you using McAfee.\nPlease make sure your antivirus didn't delete the faf-uid.exe file.\nIf this has happened, change your antivirus software or add an exception and restore the file. The file can also be restored by installing the client again."
     }
+    
+    {
+      "type": "echo",
+      "cmd": ["!logs", "!log"],
+      "predicate": {"clauses": [
+        {"literals": ["where", "logs"]},
+      ]},
+      "response": "%s Log Files are located in `C:\\ProgramData\\FAForever\\logs\\`\nProgramData is a hidden folder in Windows so make sure to disable hiding hidden folders in the explorer options or copy paste the path into your explorer."
+    }
+
+    {
+      "type": "echo",
+      "cmd": ["!IPv6", "!flags"],
+      "predicate": {"clauses": [
+        {"literals": ["see", "flag"]},
+        {"literals": ["question", "flag"]},
+        {"literals": ["questionmark", "flag"]},
+      ]},
+      "response": "%s FAForever may not handle IPv6 Addresses properly and thus fails to show your location/flag. You can disable IPv6 on your local network adapter.\nhttps://cdn.discordapp.com/attachments/202928463076786176/402561268201947136/unknown.png"
+    }
+
+    {
+      "type": "echo",
+      "cmd": ["!game.prefs", "!prefs", "!gameprefs"],
+      "predicate": {"clauses": [
+        {"literals": ["where", "prefs"]},
+        {"literals": ["where", "game.prefs"]},
+        {"literals": ["find", "game.prefs"]},
+      ]},
+      "response": "%s The game.prefs file stores settings for the game such as hotkeys or grafics. you can find the game.prefs file in `C:\\Users\\%Username%\\AppData\\Local\\Gas Powered Games\\Supreme Commander Forged Alliance`"
+    }
+
+    {
+      "type": "echo",
+      "cmd": ["!sound", "!stereo"],
+      "predicate": {"clauses": [
+        {"literals": ["no", "sound"]},
+        {"literals": ["sound", "once"]},
+        {"literals": ["no", "sound"]},
+      ]},
+      "response": "%s http://forums.faforever.com/viewtopic.php?f=3&t=13963#sound"
+    }
+
+    {
+      "type": "echo",
+      "cmd": ["!sound", "!stereo"],
+      "predicate": {"clauses": [
+        {"literals": ["no", "sound"]},
+        {"literals": ["sound", "once"]},
+        {"literals": ["no", "sound"]},
+      ]},
+      "response": "%s http://forums.faforever.com/viewtopic.php?f=3&t=13963#sound"
+    }
+
+    {
+      "type": "echo",
+      "cmd": ["!coop"],
+      "response": "%s Downlords client does not install the coop init file which is required to run the coop game mode - this will be fixed in version 0.9.\nYou can play coop via downlords client after hosting/joining a coop lobby with the original client."
+    },
 
   ]
 }
