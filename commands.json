@@ -15,23 +15,182 @@
     {
       "type": "echo",
       "cmd": ["!demo"],
-      "response": "%s I'm alive."
+      "response": "%s I am alive (and better than you @Dostya)."
     },
 
     {
       "type": "echo",
-      "cmd": ["!uid", "!mcafee"],
+      "cmd": ["!gamecrash"],
       "predicate": {"clauses": [
-        {"literals": ["uid", "calculate"]}, /* Read like: message needs to contain all literals in a line -> react */
-        {"literals": ["uid", "smurf"]},
-        {"literals": ["uid", "failed"]},
-        {"literals": ["unique id", "calculate"]},
-        {"literals": ["unique id", "smurf"]},
-        {"literals": ["unique id", "failed"]},
-        {"literals": ["cannot run program \"lib/faf-uid.exe\""]}
+        {"literals": ["Forged", "Alliance", "Crashed"]} /* Read like: message needs to contain all literals in a line -> react */
       ]},
-      "response": "%s You seem to have posted an issue about our UID system.\nIt is very likely this happens due to you using McAfee.\nPlease make sure your antivirus didn't delete the faf-uid.exe file.\nIf this has happened, change your antivirus software or add an exception and restore the file. The file can also be restored by installing the client again."
-    }
+      "response": "%s You seem to have posted an issue about your game crashing. First of all, make sure you have launched the game from steam / the normal install at least once.\nIf that doesn't solve the issue, disable all mods in the FAF client and try again.\nIf that still doesn't help, post a game log. It can be found in the top right corner of the client."
+    },
 
+    {
+      "type": "echo",
+      "cmd": ["!logs", "!log"],
+      "predicate": {"clauses": [
+        {"literals": ["where", "logs"]}
+      ]},
+      "response": "%s Log Files are located in `C:\\ProgramData\\FAForever\\logs\\`\nProgramData is a hidden folder in Windows so make sure to disable hiding hidden folders in the explorer options or copy paste the path into your explorer."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!IPv6", "!flags"],
+      "predicate": {"clauses": [
+        {"literals": ["see", "flag"]},
+        {"literals": ["question", "flag"]},
+        {"literals": ["questionmark", "flag"]}
+      ]},
+      "response": "%s FAForever may not handle IPv6 Addresses properly and thus fails to show your location/flag. You can disable IPv6 on your local network adapter.\nhttps://cdn.discordapp.com/attachments/202928463076786176/402561268201947136/unknown.png"
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!game.prefs", "!prefs", "!gameprefs"],
+      "predicate": {"clauses": [
+        {"literals": ["where", "prefs"]},
+        {"literals": ["where", "game.prefs"]},
+        {"literals": ["find", "game.prefs"]}
+      ]},
+      "response": "%s The game.prefs file stores settings for the game such as hotkeys or grafics. you can find the game.prefs file in `C:\\Users\\%Username%\\AppData\\Local\\Gas Powered Games\\Supreme Commander Forged Alliance`"
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!sound", "!stereo"],
+      "predicate": {"clauses": [
+        {"literals": ["no", "sound"]},
+        {"literals": ["sound", "once"]},
+        {"literals": ["no", "sound"]}
+      ]},
+      "response": "%s http://forums.faforever.com/viewtopic.php?f=3&t=13963#sound"
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!sound", "!stereo"],
+      "predicate": {"clauses": [
+        {"literals": ["no", "sound"]},
+        {"literals": ["sound", "once"]},
+        {"literals": ["no", "sound"]}
+      ]},
+      "response": "%s http://forums.faforever.com/viewtopic.php?f=3&t=13963#sound"
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!coop"],
+      "response": "%s Downlords client does not install the coop init file which is required to run the coop game mode - this will be fixed in version 0.9.\nYou can play coop via downlords client after hosting/joining a coop lobby with the original client."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!nvidia"],
+      "predicate": {"clauses": [
+        {"literals": ["performance"]},
+        {"literals": ["stuttering"]},
+        {"literals": ["lag"]}
+      ]},
+      "response": "%s It sounds like you are experiencing some trouble with in game performance. This may be due to driver issues. Take a look here: https://forum.faforever.com/topic/779/nvidia-driver-performance-problem/\nMake sure your graphics driver is up to date, using the mod \"Nvidia Fix\" might also help.\nIf that doesn't solve the issue, make sure to post your game.log file. You can find it in the logs folder in the top left of the client."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!ice"],
+      "predicate": {"clauses": [
+        {"literals": ["connecting"]},
+        {"literals": ["connect", "problem"]},
+        {"literals": ["connect", "issue"]},
+        {"literals": ["connect", "problem"]},
+        {"literals": ["connect", "cant"]},
+        {"literals": ["connect", "cannot"]},
+        {"literals": ["connect", "can not"]}
+      ]},
+      "response": "%s It sounds like you are experiencing some trouble connecting to games and other players. Take a look here: https://wiki.faforever.com/index.php?title=Connection_issues_and_solutions\nIf that doesn't solve the issue, make sure to post your ice-adapter.log file. You can find it in the logs folder in the top left of the client."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!mail"],
+      "predicate": {"clauses": [
+        {"literals": ["email"]},
+        {"literals": ["mail"]},
+        {"literals": ["registration", "message"]}
+      ]},
+      "response": "%s It sounds like you are encountering an issue with receiving e-mails from FAF. Those should usually arrive instantly, but may take up to 30 minutes to do so. Make sure you have checked your spam folder!!! If you're still not getting it, please post again."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!steam"],
+      "predicate": {"clauses": [
+        {"literals": ["link"]},
+        {"literals": ["steam"]}
+      ]},
+      "response": "%s Due to legal reasons, you are required to prove that you own a valid license of Supreme Commander: Forged Alliance.\nCurrently FAF only supports doing so by linking your FAF account to Steam. You do not have to have the Steam client install to play.\nIn case you own a DVD copy of the game, you can use your DVD key to obtain a valid license using Steam's `Activate a Product on Steam` feature.\nIf you are getting the `Access Token expired` error, log out and in again."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!linux"],
+      "predicate": {"clauses": [
+        {"literals": ["linux"]},
+        {"literals": ["unix"]}
+      ]},
+      "response": "%s In case you've made alternative life choices regarding your operating system and are now looking for help on how to run Supreme Command: Forged Alliance and the FAF client, take a look here:\nhttps://wiki.faforever.com/index.php?title=Setting_Up_FAF_Linux\nand here:\nhttps://www.youtube.com/watch?v=Rv3ZXA4FNFk"
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!down"],
+      "predicate": {"clauses": [
+        {"literals": ["server", "down"]},
+        {"literals": ["faf", "down"]}
+      ]},
+      "response": "%s Someone please remind @geosearchef to give me the functionality to check if the server is down. Until then, let's just assume it is in a superposition of both."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!gamepath"],
+      "predicate": {"clauses": [
+        {"literals": ["forged", "directory"]},
+        {"literals": ["alliance", "directory"]},
+        {"literals": ["game", "directory"]},
+        {"literals": ["game", "path"]},
+        {"literals": ["locate", "game"]},
+        {"literals": ["locate", "forged"]},
+        {"literals": ["locate", "alliance"]}
+      ]},
+      "response": "%s To play on FAF you need to have a valid copy of Supreme Commander: Forged Alliance installed.\nYou have to tell the FAF client where it can find that, and the client will prompt you to do so on launching your first game.\n"
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!logs"],
+      "predicate": {"clauses": [
+        {"literals": ["got", "problem"]},
+        {"literals": ["hav", "problem"]},
+        {"literals": ["hav", "issu"]},
+        {"literals": ["can't"]},
+        {"literals": ["cannot"]},
+        {"literals": ["can not"]},
+        {"literals": ["stuck"]},
+        {"literals": ["help"]}
+      ]},
+      "response": "%s This seems to be your first time posting about a technical issue.\n\nIn case you're encountering a game related problem, please post your game.log.\nIf your issue is related to the FAF client, please post the downlords-faf-client.log file.\nFor connection related issues, post the ice-adapter.log.\n\nAll files can be found by clicking the `Show log folder` button in the top left corner of the FAF client."
+    },
+
+    {
+      "type": "echo",
+      "cmd": ["!ping"],
+      "predicate": {"clauses": [
+        {"literals": ["ping"]}
+      ]},
+      "response": "%s Pong. No, seriously, there is no such thing as `ping` in FAF. You probably meant latency or RTT.\n(If you wanted info on connection issues, type `!ice`))"
+    }
   ]
 }

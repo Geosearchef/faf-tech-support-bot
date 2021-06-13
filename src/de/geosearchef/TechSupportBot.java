@@ -1,10 +1,10 @@
 package de.geosearchef;
 
 import com.google.gson.Gson;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,14 +44,12 @@ public class TechSupportBot {
 	}
 
 	private static void connectToDiscord() throws IOException {
-		JDABuilder builder = new JDABuilder(AccountType.BOT);
-		//Whoever kidnapped my bot, you're not funny ;)
-		builder.setToken(new String(Files.readAllBytes(Paths.get("token"))));
-		builder.addEventListener(new Listener());
+		JDABuilder builder = JDABuilder.createDefault(new String(Files.readAllBytes(Paths.get("token"))));
+		builder.addEventListeners(new Listener());
 
 		logger.debug("Starting bot...");
 		try {
-			builder.build();
+			JDA jda = builder.build();
 		} catch(LoginException e) {
 			logger.error("Could not create bot.", e);
 			System.exit(1);
@@ -62,9 +60,10 @@ public class TechSupportBot {
 
 
 	private static class Listener extends ListenerAdapter {
+
 		@Override
 		public void onMessageReceived(MessageReceivedEvent event) {
-			if(event.getAuthor().isBot() || !event.getChannel().getName().equals("technical-help")) {
+			if(event.getAuthor().isBot()) {
 				return;
 			}
 
@@ -82,6 +81,10 @@ public class TechSupportBot {
 						event.getChannel().sendMessage(String.format(cmd.getResponse(), "")).queue();
 						lastCommandUsage = System.currentTimeMillis();
 					});
+
+			if(!event.getChannel().getName().equals("technical-help")) {
+				return;
+			}
 
 			//Check for triggered predicate
 			Arrays.stream(config.getCommands())

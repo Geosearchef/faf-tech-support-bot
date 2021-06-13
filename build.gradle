@@ -30,15 +30,18 @@ sourceSets {
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
 }
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.2'
 
-    compile 'net.dv8tion:JDA:3.7.1_392'
+    compile 'net.dv8tion:JDA:4.3.0_277'
     compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
     compile group: 'ch.qos.logback', name:'logback-classic', version: '1.0.9'
     compile group: 'ch.qos.logback', name:'logback-core', version: '1.0.9'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
-
 }
