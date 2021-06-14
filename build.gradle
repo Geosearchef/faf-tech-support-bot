@@ -37,7 +37,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.2'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
 
     compile 'net.dv8tion:JDA:4.3.0_277'
     compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
