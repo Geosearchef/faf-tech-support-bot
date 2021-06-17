@@ -22,7 +22,7 @@
       "type": "echo",
       "cmd": ["!gamecrash"],
       "predicate": {"clauses": [
-        {"literals": ["Forged", "Alliance", "Crashed"]} /* Read like: message needs to contain all literals in a line -> react */
+        {"literals": ["Forged", "Alliance", "Crashed"]} /* Read as: message needs to contain all literals in a line -> react */
       ]},
       "response": "%s You seem to have posted an issue about your game crashing. First of all, make sure you have launched the game from steam / the normal install at least once.\nIf that doesn't solve the issue, disable all mods in the FAF client and try again.\nIf that still doesn't help, post a game log. It can be found in the top right corner of the client."
     },
@@ -63,27 +63,12 @@
       "cmd": ["!sound", "!stereo"],
       "predicate": {"clauses": [
         {"literals": ["no", "sound"]},
-        {"literals": ["sound", "once"]},
-        {"literals": ["no", "sound"]}
+        {"literals": ["issue", "sound"]},
+        {"literals": ["problem", "sound"]},
+        {"literals": ["trouble", "sound"]},
+        {"literals": ["sound", "once"]}
       ]},
-      "response": "%s http://forums.faforever.com/viewtopic.php?f=3&t=13963#sound"
-    },
-
-    {
-      "type": "echo",
-      "cmd": ["!sound", "!stereo"],
-      "predicate": {"clauses": [
-        {"literals": ["no", "sound"]},
-        {"literals": ["sound", "once"]},
-        {"literals": ["no", "sound"]}
-      ]},
-      "response": "%s http://forums.faforever.com/viewtopic.php?f=3&t=13963#sound"
-    },
-
-    {
-      "type": "echo",
-      "cmd": ["!coop"],
-      "response": "%s Downlords client does not install the coop init file which is required to run the coop game mode - this will be fixed in version 0.9.\nYou can play coop via downlords client after hosting/joining a coop lobby with the original client."
+      "response": "%s It sounds like you're having an issue with getting any sound output from the game. https://forum.faforever.com/topic/796/i-can-t-hear-some-of-the-audio-or-other-sound-issue-what-should-i-do"
     },
 
     {
@@ -148,7 +133,8 @@
       "cmd": ["!down"],
       "predicate": {"clauses": [
         {"literals": ["server", "down"]},
-        {"literals": ["faf", "down"]}
+        {"literals": ["faf", "down"]},
+        {"literals": ["server", "problem"]}
       ]},
       "response": "%s Someone please remind @geosearchef to give me the functionality to check if the server is down. Until then, let's just assume it is in a superposition of both."
     },
@@ -179,7 +165,8 @@
         {"literals": ["cannot"]},
         {"literals": ["can not"]},
         {"literals": ["stuck"]},
-        {"literals": ["help"]}
+        {"literals": ["help"]},
+        {"literals": ["crash"]}
       ]},
       "response": "%s This seems to be your first time posting about a technical issue.\n\nIn case you're encountering a game related problem, please post your game.log.\nIf your issue is related to the FAF client, please post the downlords-faf-client.log file.\nFor connection related issues, post the ice-adapter.log.\n\nAll files can be found by clicking the `Show log folder` button in the top left corner of the FAF client."
     },

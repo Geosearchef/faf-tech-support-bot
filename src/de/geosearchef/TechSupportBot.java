@@ -3,8 +3,11 @@ package de.geosearchef;
 import com.google.gson.Gson;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +47,10 @@ public class TechSupportBot {
 	}
 
 	private static void connectToDiscord() throws IOException {
-		JDABuilder builder = JDABuilder.createDefault(new String(Files.readAllBytes(Paths.get("token"))));
-		builder.addEventListeners(new Listener());
+		JDABuilder builder = JDABuilder.createDefault(new String(Files.readAllBytes(Paths.get("token"))))
+				.enableIntents(GatewayIntent.GUILD_MEMBERS) // has to be enabled in discord developer panel
+				.setMemberCachePolicy(MemberCachePolicy.ALL)
+				.addEventListeners(new Listener());
 
 		logger.debug("Starting bot...");
 		try {
@@ -82,7 +87,14 @@ public class TechSupportBot {
 						lastCommandUsage = System.currentTimeMillis();
 					});
 
-			if(!event.getChannel().getName().equals("technical-help")) {
+			Member guildMember = event.getGuild().getMember(event.getMessage().getAuthor());
+
+			if (!event.getChannel().getName().equals("technical-help") || guildMember != null &&
+					(guildMember.getRoles().stream().anyMatch(it -> it.getName().equals("Developer"))
+							|| guildMember.getRoles().stream().anyMatch(it -> it.getName().equals("Tech Support"))
+							|| guildMember.getRoles().stream().anyMatch(it -> it.getName().contains("Modder"))
+							|| guildMember.getRoles().stream().anyMatch(it -> it.getName().contains("Moderator"))
+							|| guildMember.getRoles().stream().anyMatch(it -> it.getName().contains("Mapper")))) {
 				return;
 			}
 
