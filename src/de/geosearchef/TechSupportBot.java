@@ -1,6 +1,8 @@
 package de.geosearchef;
 
 import com.google.gson.Gson;
+import de.geosearchef.scanner.ServiceScanner;
+import de.geosearchef.scanner.SystemsScanner;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -15,6 +17,8 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,6 +36,9 @@ public class TechSupportBot {
 		loadConfig();
 
 		connectToDiscord();
+
+		SystemsScanner.init();
+		SystemsScanner.startPeriodicScanner();
 	}
 
 	private static void loadConfig() {
@@ -87,6 +94,16 @@ public class TechSupportBot {
 						lastCommandUsage = System.currentTimeMillis();
 					});
 
+
+			Arrays.stream(config.getCommands())
+					.filter(c -> c.getType().equals("serverStatus"))
+					.filter(c -> Arrays.stream(c.getCmd()).anyMatch(s -> s.equalsIgnoreCase(messageIn))
+					|| (c.getPredicate() != null && c.getPredicate().evaluate(messageIn)))
+					.findFirst()
+					.ifPresent(c -> {
+						event.getChannel().sendMessage(getSystemsStatusMessage()).queue();
+					});
+
 			Member guildMember = event.getGuild().getMember(event.getMessage().getAuthor());
 
 			if (!event.getChannel().getName().equals("technical-help") || guildMember != null &&
@@ -120,5 +137,43 @@ public class TechSupportBot {
 						});
 					});
 		}
+	}
+
+	public static String getSystemsStatusMessage() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("**Is the server down?**\n");
+
+		sb.append("**");
+		long countOfReachableSystems = SystemsScanner.services.stream().filter(ServiceScanner::isUp).count();
+		if(countOfReachableSystems == SystemsScanner.services.size()) {
+			sb.append("No, all FAF systems are operational.");
+		} else if(countOfReachableSystems == 0) {
+			sb.append("Yes, I couldn't reach any FAF service.");
+		} else {
+			sb.append("Yes, some systems couldn't be reached.");
+		}
+
+		sb.append("**\n\n");
+		SystemsScanner.services.forEach(s -> {
+			String emoji = s.isUp() ? ":white_check_mark:" : ":x:";
+			sb.append(String.format("%s %s",
+					emoji,
+					s.getRepresentation()
+			));
+
+			if(!s.isUp()) {
+				sb.append(String.format("    (last reached %s)",
+						s.getLastChecked() == null ? "\"never\"" : String.format("%d seconds ago", Duration.between(s.getLastChecked(), Instant.now()).toMillis() / 1000)
+				));
+			}
+
+			sb.append("\n");
+		});
+
+		sb.append("\n");
+		sb.append(String.format("(scanned %d seconds ago)", Duration.between(SystemsScanner.lastScan, Instant.now()).toMillis() / 1000));
+
+		return sb.toString();
 	}
 }

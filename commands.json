@@ -19,6 +19,18 @@
     },
 
     {
+      "type": "serverStatus",
+      "cmd": ["!down"],
+      "predicate": {"clauses": [
+        {"literals": ["server", "down"]},
+        {"literals": ["faf", "down"]},
+        {"literals": ["cannot", "login"]},
+        {"literals": ["server", "problem"]}
+      ]},
+      "response": ""
+    },
+
+    {
       "type": "echo",
       "cmd": ["!gamecrash"],
       "predicate": {"clauses": [
@@ -139,17 +151,6 @@
         {"literals": ["unix"]}
       ]},
       "response": "%s In case you've made alternative life choices regarding your operating system and are now looking for help on how to run Supreme Command: Forged Alliance and the FAF client, take a look here:\nhttps://wiki.faforever.com/index.php?title=Setting_Up_FAF_Linux\nand here:\nhttps://www.youtube.com/watch?v=Rv3ZXA4FNFk"
-    },
-
-    {
-      "type": "echo",
-      "cmd": ["!down"],
-      "predicate": {"clauses": [
-        {"literals": ["server", "down"]},
-        {"literals": ["faf", "down"]},
-        {"literals": ["server", "problem"]}
-      ]},
-      "response": "%s Someone please remind @geosearchef to give me the functionality to check if the server is down. Until then, let's just assume it is in a superposition of both."
     },
 
     {
