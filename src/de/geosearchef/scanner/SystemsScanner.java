@@ -20,7 +20,7 @@ public class SystemsScanner {
 
     public static void init() {
         services = new ArrayList<ServiceScanner>() {{
-            add(new FAFServerScanner("Lobby-Server", "lobbys.faforever.com", 8002));
+            add(new FAFServerScanner("Lobby-Server", "lobby.faforever.com", 8002));
             add(new HttpScanner("API", "https://api.faforever.com/"));
             add(new HttpScanner("Webserver", "https://faforever.com"));
             add(new HttpScanner("Forums", "https://forum.faforever.com/"));
