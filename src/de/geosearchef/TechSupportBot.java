@@ -106,11 +106,19 @@ public class TechSupportBot {
 					.filter(c -> c.getPredicate().evaluate(messageIn))
 					.findFirst()
 					.ifPresent(cmd -> {
-						event.getChannel().sendMessage(String.format(cmd.getResponse(), "<@" + event.getAuthor().getId() + "> ")).queue();
-						notifiedUsers.get(cmd).add(event.getAuthor().getName());
+						event.getChannel()
+								.getHistory()
+								.retrievePast(cmd.getUserSentLimit().getOutOf())
+								.submit()
+								.thenAccept(previousMessages -> {
+							if(previousMessages.stream().filter(m -> m.getAuthor().getId().equals(event.getMessage().getAuthor().getId())).count() > cmd.getUserSentLimit().getMax()) {
+								logger.info("Message send cancelled due to too many previous messages from this user");
+							} else {
+								event.getChannel().sendMessage(String.format(cmd.getResponse(), "<@" + event.getAuthor().getId() + "> ")).queue();
+								notifiedUsers.get(cmd).add(event.getAuthor().getName());
+							}
+						});
 					});
-
-//			System.out.printf("Message from %s in %s: %s", event.getAuthor().getName(), event.getChannel().getName(), event.getMessage());
 		}
 	}
 }

@@ -38,6 +38,18 @@
 
     {
       "type": "echo",
+      "cmd": ["!logs", "!log"],
+      "predicate": {"clauses": [
+        {"literals": ["where", "game", "files"]},
+        {"literals": ["where", "game", "data"]},
+        {"literals": ["location", "game", "data"]},
+        {"literals": ["location", "game", "file"]}
+      ]},
+      "response": "%s FAF game data is located in `C:\\ProgramData\\FAForever\\`\nProgramData is a hidden folder in Windows so make sure to disable hiding hidden folders in the explorer options or copy paste the path into your explorer."
+    },
+
+    {
+      "type": "echo",
       "cmd": ["!IPv6", "!flags"],
       "predicate": {"clauses": [
         {"literals": ["see", "flag"]},
@@ -77,9 +89,10 @@
       "predicate": {"clauses": [
         {"literals": ["performance"]},
         {"literals": ["stuttering"]},
+        {"literals": ["fps", "drop"]},
         {"literals": ["lag"]}
       ]},
-      "response": "%s It sounds like you are experiencing some trouble with in game performance. This may be due to driver issues. Take a look here: https://forum.faforever.com/topic/779/nvidia-driver-performance-problem/\nMake sure your graphics driver is up to date, using the mod \"Nvidia Fix\" might also help.\nIf that doesn't solve the issue, make sure to post your game.log file. You can find it in the logs folder in the top left of the client."
+      "response": "%s It sounds like you are experiencing some trouble with in game performance. This may be due to driver issues. Take a look here: https://forum.faforever.com/topic/1499/nvidia-performance-problem-update-april-2021-466-11?_=1623849789786\nMake sure your graphics driver is up to date, using the mod \"Nvidia Fix\" might also help.\nIf that doesn't solve the issue, make sure to post your game.log file. You can find it in the logs folder in the top left of the client."
     },
 
     {
@@ -157,6 +170,7 @@
     {
       "type": "echo",
       "cmd": ["!logs"],
+      "userSentLimit": {"max":2, "outOf": 10},
       "predicate": {"clauses": [
         {"literals": ["got", "problem"]},
         {"literals": ["hav", "problem"]},
