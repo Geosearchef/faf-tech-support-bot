@@ -165,7 +165,7 @@ public class TechSupportBot {
 
 			if(!s.isUp()) {
 				sb.append(String.format("    (last reached %s)",
-						s.getLastChecked() == null ? "\"never\"" : String.format("%d seconds ago", Duration.between(s.getLastChecked(), Instant.now()).toMillis() / 1000)
+						s.getLastResponse() == null ? "\"never\"" : String.format("%d seconds ago", Duration.between(s.getLastResponse(), Instant.now()).toMillis() / 1000)
 				));
 			}
 
