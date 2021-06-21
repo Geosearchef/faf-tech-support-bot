@@ -98,7 +98,7 @@ public class TechSupportBot {
 			Arrays.stream(config.getCommands())
 					.filter(c -> c.getType().equals("serverStatus"))
 					.filter(c -> Arrays.stream(c.getCmd()).anyMatch(s -> s.equalsIgnoreCase(messageIn))
-					|| (c.getPredicate() != null && c.getPredicate().evaluate(messageIn)))
+					|| (c.getPredicate() != null && c.getPredicate().evaluate(messageIn) && Arrays.stream(c.getExclude()).noneMatch(it -> messageIn.toLowerCase().contains(it))))
 					.findFirst()
 					.ifPresent(c -> {
 						event.getChannel().sendMessage(getSystemsStatusMessage()).queue();
@@ -121,6 +121,7 @@ public class TechSupportBot {
 					.filter(c -> ! notifiedUsers.get(c).contains(event.getAuthor().getName()))
 					.filter(c -> c.getPredicate() != null)
 					.filter(c -> c.getPredicate().evaluate(messageIn))
+					.filter(c -> Arrays.stream(c.getExclude()).noneMatch(it -> messageIn.toLowerCase().contains(it)))
 					.findFirst()
 					.ifPresent(cmd -> {
 						event.getChannel()

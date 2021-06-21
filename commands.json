@@ -27,6 +27,7 @@
         {"literals": ["cannot", "login"]},
         {"literals": ["server", "problem"]}
       ]},
+      "exclude": ["downlord", "download"],
       "response": ""
     },
 

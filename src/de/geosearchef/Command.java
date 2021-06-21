@@ -8,6 +8,7 @@ class Command {
 	private final String[] cmd;
 	private final String response;
 	private final Predicate predicate;
+	private final String[] exclude;
 	private final UserSentLimit userSentLimit;
 
 	@Data
