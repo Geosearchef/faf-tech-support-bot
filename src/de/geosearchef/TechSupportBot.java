@@ -121,15 +121,15 @@ public class TechSupportBot {
 					.filter(c -> ! notifiedUsers.get(c).contains(event.getAuthor().getName()))
 					.filter(c -> c.getPredicate() != null)
 					.filter(c -> c.getPredicate().evaluate(messageIn))
-					.filter(c -> Arrays.stream(c.getExclude()).noneMatch(it -> messageIn.toLowerCase().contains(it)))
+					.filter(c -> c.getExclude() == null || Arrays.stream(c.getExclude()).noneMatch(it -> messageIn.toLowerCase().contains(it)))
 					.findFirst()
 					.ifPresent(cmd -> {
 						event.getChannel()
 								.getHistory()
-								.retrievePast(cmd.getUserSentLimit().getOutOf())
+								.retrievePast(cmd.getUserSentLimit() == null ? 1 : cmd.getUserSentLimit().getOutOf())
 								.submit()
 								.thenAccept(previousMessages -> {
-							if(previousMessages.stream().filter(m -> m.getAuthor().getId().equals(event.getMessage().getAuthor().getId())).count() > cmd.getUserSentLimit().getMax()) {
+							if(cmd.getUserSentLimit() != null && previousMessages.stream().filter(m -> m.getAuthor().getId().equals(event.getMessage().getAuthor().getId())).count() > cmd.getUserSentLimit().getMax()) {
 								logger.info("Message send cancelled due to too many previous messages from this user");
 							} else {
 								event.getChannel().sendMessage(String.format(cmd.getResponse(), "<@" + event.getAuthor().getId() + "> ")).queue();

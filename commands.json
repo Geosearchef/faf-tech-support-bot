@@ -51,7 +51,7 @@
 
     {
       "type": "echo",
-      "cmd": ["!logs", "!log"],
+      "cmd": ["!gamedata", "!gamedata"],
       "predicate": {"clauses": [
         {"literals": ["where", "game", "files"]},
         {"literals": ["where", "game", "data"]},
@@ -80,7 +80,7 @@
         {"literals": ["where", "game.prefs"]},
         {"literals": ["find", "game.prefs"]}
       ]},
-      "response": "%s The game.prefs file stores settings for the game such as hotkeys or grafics. you can find the game.prefs file in `C:\\Users\\%Username%\\AppData\\Local\\Gas Powered Games\\Supreme Commander Forged Alliance`"
+      "response": "%s The game.prefs file stores settings for the game such as hotkeys or grafics. you can find the game.prefs file in `C:\\Users\\%%Username%%\\AppData\\Local\\Gas Powered Games\\Supreme Commander Forged Alliance`"
     },
 
     {
